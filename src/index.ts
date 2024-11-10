@@ -1,11 +1,20 @@
+import { v2 as cloudinary } from 'cloudinary';
 import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
+import myRestaurantRoute from "./routes/myRestaurantRoute";
+
+const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGODB_URI!).then(() => console.log("Connected to MongoDB"));
-const PORT = process.env.PORT || 5000;
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const app = express();
 app.use(express.json());
@@ -16,5 +25,6 @@ app.get("/health", (req: Request, res: Response) => {
 })
 
 app.use("/api/user", userRoute);
+app.use("/api/my/restaurant", myRestaurantRoute);
 
 app.listen(PORT, () => console.log(`Server is running on localhost:${PORT}`));
