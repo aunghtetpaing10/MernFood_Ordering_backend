@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
 import myRestaurantRoute from "./routes/myRestaurantRoute";
 import restaurantRoute from "./routes/restaurantRoute";
+import orderRoute from "./routes/orderRoute";
 
 const PORT = process.env.PORT || 5000;
 
@@ -28,5 +29,6 @@ app.get("/health", (req: Request, res: Response) => {
 app.use("/api/user", userRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
 app.use("/api/restaurant", restaurantRoute);
+app.use("/api/order", orderRoute);
 
 app.listen(PORT, () => console.log(`Server is running on localhost:${PORT}`));
