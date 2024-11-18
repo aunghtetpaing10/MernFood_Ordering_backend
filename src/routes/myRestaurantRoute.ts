@@ -6,6 +6,8 @@ import {
   createMyRestaurant,
   getMyRestaurant,
   updateMyRestaurant,
+  getMyRestaurantOrders,
+  updateOrderStatus,
 } from "../controllers/myRestaurantController";
 
 const router = express.Router();
@@ -36,5 +38,9 @@ router.put(
   validateMyRestaurantRequest,
   updateMyRestaurant
 );
+
+router.get("/order", jwtCheck, jwtParse, getMyRestaurantOrders);
+
+router.patch("/order/:orderId/status", jwtCheck, jwtParse, updateOrderStatus);
 
 export default router;

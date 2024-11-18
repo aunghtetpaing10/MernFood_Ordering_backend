@@ -83,12 +83,23 @@ const createCheckoutSession = async (req: Request, res: Response) => {
       return;
     }
 
+    // Calculate initial total amount
+    const initialTotalAmount =
+      checkoutSessionRequest.cartItems.reduce((total, item) => {
+        const menuItem = restaurant.menuItems.find(
+          (menuItem) => menuItem._id.toString() === item.menuItemId
+        );
+        if (!menuItem) throw new Error("Menu item not found");
+        return total + menuItem.price * parseInt(item.quantity);
+      }, 0) + restaurant.deliveryPrice;
+
     const newOrder = new Order({
       restaurant: restaurant,
       user: req.userId,
       status: "placed",
       deliveryDetails: checkoutSessionRequest.deliveryDetails,
       cartItems: checkoutSessionRequest.cartItems,
+      totalAmount: initialTotalAmount,
       createdAt: new Date(),
     });
 
