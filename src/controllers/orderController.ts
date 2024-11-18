@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import Order from "../models/order";
 import Stripe from "stripe";
 import Restaurant, { MenuItemType } from "../models/restaurant";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const STRIPE = new Stripe(process.env.STRIPE_API_KEY as string);
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
